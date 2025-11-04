@@ -16,9 +16,9 @@ export const Header = () => {
   const isLocalNetwork = targetNetwork.id === hardhat.id;
   const pathname = usePathname();
   
-  // Definir en qué páginas mostrar el logo
-  const shouldShowLogo = pathname === "/giftcard" || pathname === "/certificados" || pathname === "/items";
+  // Páginas donde se muestran diferentes elementos
   const isHomePage = pathname === "/";
+  const isSpecialPage = pathname === "/giftcard" || pathname === "/certificados" || pathname === "/items" || pathname === "/perfil";
 
   const burgerMenuRef = useRef<HTMLDetailsElement>(null);
   useOutsideClick(burgerMenuRef, () => {
@@ -28,7 +28,31 @@ export const Header = () => {
   return (
     <div className="sticky lg:static top-0 navbar bg-base-100 min-h-0 shrink-0 justify-between z-20 shadow-md shadow-secondary px-0 sm:px-2">
       <div className="navbar-start w-auto lg:w-1/2">
-        {!isHomePage && (
+        {/* Logo siempre visible en desktop, en mobile solo visible fuera del home */}
+        {(isHomePage ? (
+          // En home: solo mostrar en desktop (lg)
+          <div className="hidden lg:flex">
+            <Link 
+              href="/" 
+              passHref 
+              className="flex items-center gap-2 ml-4 mr-6 shrink-0"
+            >
+              <div className="flex relative w-10 h-10">
+                <Image 
+                  alt="SE2 logo" 
+                  className="cursor-pointer rounded-2xl" 
+                  fill 
+                  src="/img/icono_mamaya.png" 
+                />
+              </div>
+              <div className="flex flex-col">
+                <span className="font-bold leading-tight">MamayaWallet</span>
+                <span className="text-xs">Más que una billetera</span>
+              </div>
+            </Link>
+          </div>
+        ) : (
+          // En otras páginas: mostrar siempre
           <Link 
             href="/" 
             passHref 
@@ -47,36 +71,46 @@ export const Header = () => {
               <span className="text-xs">Más que una billetera</span>
             </div>
           </Link>
-        )}
+        ))}
         <ul className="hidden lg:flex lg:flex-nowrap menu menu-horizontal px-1 gap-2">
         </ul>
       </div>
       <div className="navbar-end grow mr-4">
-        {!shouldShowLogo && (
+        {/* En páginas especiales (giftcard, certificados, items, perfil): 
+            - Desktop: mostrar botones sin faucet ni dirección
+            - Mobile: ocultar botones completamente 
+            En otras páginas: mostrar todo normalmente en desktop */}
+        {isSpecialPage ? (
+          <div className="hidden lg:flex items-center">
+            <RainbowKitCustomConnectButton />
+          </div>
+        ) : (
           <>
             <RainbowKitCustomConnectButton />
             {isLocalNetwork && <FaucetButton />}
           </>
         )}
-        <button className="botonPerfil btn btn-soft btn-primary ml-4 text-white">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width={24}
-            height={24}
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth={2}
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            className="icon icon-tabler icons-tabler-outline icon-tabler-user"
-          >
-            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-            <path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" />
-            <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
-          </svg>
-          Perfil
-        </button>
+        <Link href="/perfil">
+          <button className="botonPerfil btn btn-soft btn-primary ml-4 text-white">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width={24}
+              height={24}
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth={2}
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="icon icon-tabler icons-tabler-outline icon-tabler-user"
+            >
+              <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+              <path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" />
+              <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+            </svg>
+            Perfil
+          </button>
+        </Link>
       </div>
     </div>
   );
