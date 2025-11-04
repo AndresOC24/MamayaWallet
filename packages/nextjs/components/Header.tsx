@@ -3,14 +3,10 @@
 import React, { useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { hardhat } from "viem/chains";
 import { FaucetButton, RainbowKitCustomConnectButton } from "~~/components/scaffold-eth";
 import { useOutsideClick, useTargetNetwork } from "~~/hooks/scaffold-eth";
-
-
-
-
-
 
 /**
  * Site header
@@ -18,6 +14,8 @@ import { useOutsideClick, useTargetNetwork } from "~~/hooks/scaffold-eth";
 export const Header = () => {
   const { targetNetwork } = useTargetNetwork();
   const isLocalNetwork = targetNetwork.id === hardhat.id;
+  const pathname = usePathname();
+  const shouldShowLogoOnMobile = pathname === "/" || pathname === "/giftcard";
 
   const burgerMenuRef = useRef<HTMLDetailsElement>(null);
   useOutsideClick(burgerMenuRef, () => {
@@ -27,9 +25,20 @@ export const Header = () => {
   return (
     <div className="sticky lg:static top-0 navbar bg-base-100 min-h-0 shrink-0 justify-between z-20 shadow-md shadow-secondary px-0 sm:px-2">
       <div className="navbar-start w-auto lg:w-1/2">
-        <Link href="/" passHref className="hidden lg:flex items-center gap-2 ml-4 mr-6 shrink-0">
+        <Link 
+          href="/" 
+          passHref 
+          className={`items-center gap-2 ml-4 mr-6 shrink-0 ${
+            shouldShowLogoOnMobile ? "flex" : "hidden lg:flex"
+          }`}
+        >
           <div className="flex relative w-10 h-10">
-            <Image alt="SE2 logo" className="cursor-pointer rounded-2xl" fill src="/img/icono_mamaya.png" />
+            <Image 
+              alt="SE2 logo" 
+              className="cursor-pointer rounded-2xl" 
+              fill 
+              src="/img/icono_mamaya.png" 
+            />
           </div>
           <div className="flex flex-col">
             <span className="font-bold leading-tight">MamayaWallet</span>
@@ -37,7 +46,6 @@ export const Header = () => {
           </div>
         </Link>
         <ul className="hidden lg:flex lg:flex-nowrap menu menu-horizontal px-1 gap-2">
-
         </ul>
       </div>
       <div className="navbar-end grow mr-4">

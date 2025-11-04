@@ -1,7 +1,7 @@
 "use client";
 
 import type { NextPage } from "next";
-
+import Link from "next/link";
 
 const Home: NextPage = () => {
   return (
@@ -26,15 +26,21 @@ const Home: NextPage = () => {
           </h1>
 
           <div className="flex flex-col sm:flex-row gap-6 justify-center">
-            <button className="btn btn-outline btn-primary btn-lg text-lg font-semibold">
-              Gift Card
-            </button>
+            <Link href="/giftcard">
+              <button className="btn btn-outline btn-primary btn-lg text-lg font-semibold">
+                Gift Card
+              </button>
+            </Link>
+            <Link href="/certificados">
             <button className="btn btn-outline btn-secondary btn-lg text-lg font-semibold">
               Certificados
             </button>
+            </Link>
+            <Link href="/items">
             <button className="btn btn-outline btn-accent btn-lg text-lg font-semibold">
               Items
             </button>
+            </Link>
           </div>
 
           {/* Tarjeta con fondo blanco y sin fondo en el saldo */}
