@@ -22,7 +22,7 @@ export default defineConfig([
       "@typescript-eslint/ban-ts-comment": "off",
 
       "prettier/prettier": [
-        "warn",
+        "off",
         {
           endOfLine: "auto",
         },
