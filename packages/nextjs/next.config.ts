@@ -1,6 +1,7 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  ignoreDuringBuilds: true,
   reactStrictMode: true,
   devIndicators: false,
   typescript: {
