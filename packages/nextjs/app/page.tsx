@@ -31,16 +31,12 @@ const Home: NextPage = () => {
                 Gift Card
               </button>
             </Link>
-            <Link href="/certificados">
             <button className="btn btn-outline btn-secondary btn-lg text-lg font-semibold">
               Certificados
             </button>
-            </Link>
-            <Link href="/items">
             <button className="btn btn-outline btn-accent btn-lg text-lg font-semibold">
               Items
             </button>
-            </Link>
           </div>
 
           {/* Tarjeta con fondo blanco y sin fondo en el saldo */}
